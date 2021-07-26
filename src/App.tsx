@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import axios from 'axios'
+import { Button, TextField } from '@material-ui/core'
 
-function App() {
+const App: React.FC = () => {
+  const [textValue, setTextValue] = useState('')
+  const analizeUrl = () => {
+    axios
+      .get(`https://lf-exam-v2.web.app/api/analyze?imageUrl=${textValue}`)
+      .then((res) => {
+        console.log(res)
+      })
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ marginLeft: 20 }}>
+      <div style={{ marginTop: 16, marginBottom: 16 }}>
+        Enter Image URL to analysis below.
+      </div>
+      <form noValidate autoComplete='off'>
+        <TextField
+          style={{ width: '400px' }}
+          id='standard-basic'
+          fullWidth
+          value={textValue}
+          onChange={(e) => setTextValue(e.target.value)}
+        />
+        <Button color='primary' onClick={analizeUrl}>
+          click here to Analyze image.{' '}
+        </Button>
+      </form>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
